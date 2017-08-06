@@ -36,8 +36,10 @@ describe('gulp-inject-cordova-config', function() {
 	});
 
 	it('injects data for placeholders (with default source)', function(done) {
-		const stream = injectCordovaConfig('com.company.app', '1.2.3')();
-
+		const stream = injectCordovaConfig({
+			appId: 'com.company.app',
+			versionNumber: '1.2.3',
+		})();
 		check(stream, done, function(files) {
 			const expected = fs.readFileSync(path.join(__dirname, 'expected/config-default-source.xml'), {encoding: 'utf8'});
 
@@ -47,7 +49,11 @@ describe('gulp-inject-cordova-config', function() {
 	});
 
 	it('injects data for placeholders (with custom source)', function(done) {
-		const stream = injectCordovaConfig('com.company.app', '1.2.3', 'http://localhost:41234')();
+		const stream = injectCordovaConfig({
+			appId: 'com.company.app',
+			versionNumber: '1.2.3',
+			source: 'http://localhost:41234'
+		})();
 
 		check(stream, done, function(files) {
 			const expected = fs.readFileSync(path.join(__dirname, 'expected/config-custom-source.xml'), {encoding: 'utf8'});

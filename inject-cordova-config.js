@@ -10,7 +10,7 @@ const size = require('gulp-size');
 
 const DEFAULT_SOURCE = 'index.html';
 
-module.exports = (appId, versionNumber, source = DEFAULT_SOURCE) => {
+module.exports = ({ appId, versionNumber, source = DEFAULT_SOURCE} = options) => {
 	// Split version into major/minor/patch, and calculate a version code for android versioning
 	const versionTokens = versionNumber.split('.');
 	const androidVersionCode = versionTokens[0]*100000 + versionTokens[1]*1000 + versionTokens[2]*10

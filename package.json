@@ -23,10 +23,13 @@
   "homepage": "https://github.com/Collaborne/gulp-cordova-build-utils#readme",
   "dependencies": {
     "gulp": "^3.9.1",
+    "gulp-cordova-build-android": "^1.5.1",
+    "gulp-cordova-build-ios": "^2.0.1",
     "gulp-filter": "^5.0.1",
     "gulp-replace": "^0.6.1",
     "gulp-size": "^2.1.0",
-    "lazypipe": "^1.0.1"
+    "lazypipe": "^1.0.1",
+    "yargs": "^8.0.2"
   },
   "devDependencies": {
     "mocha": "^3.2.0",

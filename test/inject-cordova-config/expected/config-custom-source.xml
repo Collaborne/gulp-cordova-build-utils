@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="com.company.app" version="1.2.3" android-versionCode="102030">
+	<content src="http://localhost:41234"/>
+
+	<name>My app</name>
+
+	<preference name="AppendUserAgent" value="com.company.app/1.2.3" />
+
+	<allow-navigation href="http://localhost:41234"></allow-navigation>
+
+</widget>

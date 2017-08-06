@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="%%GULP.CORDOVA_ID%%" version="%%GULP.CORDOVA_VERSION%%" android-versionCode="%%GULP.CORDOVA_VERSION_ANDROID_VERSION_CODE%%">
+	<content src="%%GULP.CORDOVA_SOURCE%%"/>
+
+	<name>My app</name>
+
+	<preference name="AppendUserAgent" value="%%GULP.CORDOVA_USER_AGENT%%" />
+
+	<allow-navigation href="%%GULP.CORDOVA_ALLOWED_NAV_SOURCE%%"></allow-navigation>
+
+</widget>

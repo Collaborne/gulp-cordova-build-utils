@@ -52,12 +52,12 @@ function createMetaCsp(source, connectSrc = [], frameSrc = []) {
  * @param {string[]} options.frameSrc Entries to be added to the CSP rule for "frame-src"
  */
 module.exports = ({source = DEFAULT_SOURCE, connectSrc, frameSrc} = options) => {
-	const indexFilter = filter('index.html', {restore: true});
+	const htmlFilter = filter('**/*.html', {restore: true});
 
 	return lazypipe()
-		.pipe(() => indexFilter)
+		.pipe(() => htmlFilter)
 		.pipe(() => replace('<!-- inject:cordova-script -->', '<script src="cordova.js" async></script>'))
 		.pipe(() => replace('<!-- inject:cordova-csp -->', createMetaCsp(source, connectSrc, frameSrc)))
 		.pipe(() => size({title: 'inject-cordova-index'}))
-		.pipe(() => indexFilter.restore);
+		.pipe(() => htmlFilter.restore);
 }

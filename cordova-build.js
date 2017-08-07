@@ -6,6 +6,7 @@
 const cordovaBuildAndroid = require('gulp-cordova-build-android');
 const cordovaBuildIos = require('gulp-cordova-build-ios');
 const lazypipe = require('lazypipe');
+const path = require('path');
 const replace = require('gulp-replace');
 const size = require('gulp-size');
 

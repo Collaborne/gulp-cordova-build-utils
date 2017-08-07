@@ -38,7 +38,7 @@ function createCordovaBuild(builder, buildConfig) {
 
 	console.log(JSON.stringify(options));
 
-	return lazypipe().pipe(builder(options));
+	return lazypipe().pipe(() => builder(options));
 }
 
 exports.buildAndroid = buildConfig => createCordovaBuild(cordovaBuildAndroid, buildConfig);

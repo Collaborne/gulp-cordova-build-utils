@@ -2,7 +2,7 @@
 
 'use strict';
 
-const injectCordovaConfig = require('../../inject-cordova-config.js');
+const injectConfig = require('../../').injectConfig;
 const fs = require('fs');
 const gulp = require('gulp');
 const path = require('path');
@@ -36,7 +36,7 @@ describe('gulp-inject-cordova-config', function() {
 	});
 
 	it('injects data for placeholders (with default source)', function(done) {
-		const stream = injectCordovaConfig({
+		const stream = injectConfig({
 			appId: 'com.company.app',
 			versionNumber: '1.2.3',
 		})();
@@ -49,7 +49,7 @@ describe('gulp-inject-cordova-config', function() {
 	});
 
 	it('injects data for placeholders (with custom source)', function(done) {
-		const stream = injectCordovaConfig({
+		const stream = injectConfig({
 			appId: 'com.company.app',
 			versionNumber: '1.2.3',
 			source: 'http://localhost:41234'

@@ -2,7 +2,7 @@
 
 'use strict';
 
-const injectCordovaIndex = require('../../inject-cordova-index.js');
+const injectIndex = require('../../').injectIndex;
 const fs = require('fs');
 const gulp = require('gulp');
 const path = require('path');
@@ -36,7 +36,7 @@ describe('gulp-inject-cordova-config', function() {
 	});
 
 	it('injects data for placeholders (with default source)', function(done) {
-		const stream = injectCordovaIndex({
+		const stream = injectIndex({
 			connectSrc: ['wss://example.com', 'https://example.com'],
 			frameSrc: ['https://example.com']
 		})();
@@ -50,7 +50,7 @@ describe('gulp-inject-cordova-config', function() {
 	});
 
 	it('injects data for placeholders (with custom source)', function(done) {
-		const stream = injectCordovaIndex({
+		const stream = injectIndex({
 			source: 'http://localhost:41234',
 			connectSrc: ['wss://example.com', 'https://example.com'],
 			frameSrc: ['https://example.com']

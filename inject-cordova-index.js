@@ -11,6 +11,25 @@ const size = require('gulp-size');
 const DEFAULT_SOURCE = 'index.html';
 
 /**
+ * Replaces placeholder in the index.html of the Cordova application
+ * 
+ * @param {Object} options Configuration for the replacement
+ * @param {string[]} options.connectSrc Entries to be added to the CSP rule for "connect-src"
+ * @param {string[]} options.frameSrc Entries to be added to the CSP rule for "frame-src"
+ * @param {string} options.source Path of the application, e.g. index.html (or http://localhost:post for iOS)
+ */
+module.exports = function injectIndex({ connectSrc, frameSrc, source = DEFAULT_SOURCE } = options) {
+	const htmlFilter = filter('**/*.html', {restore: true});
+
+	return lazypipe()
+		.pipe(() => htmlFilter)
+		.pipe(() => replace('<!-- inject:cordova-script -->', '<script src="cordova.js" async></script>'))
+		.pipe(() => replace('<!-- inject:cordova-csp -->', createMetaCsp(source, connectSrc, frameSrc)))
+		.pipe(() => size({title: 'inject-cordova-index'}))
+		.pipe(() => htmlFilter.restore);
+}
+
+/**
  * Creates the <meta> tag for the Content-Security-Policy
  * 
  * It enables by default access to Youtube, Google Analytics, and Google fonts.
@@ -43,21 +62,4 @@ function createMetaCsp(source, connectSrc = [], frameSrc = []) {
 		.map(key => `${key} ${cspRules[key]}`)
 		.join(';');
 	return `<meta http-equiv="Content-Security-Policy" content="${csp}"/>`;
-}
-
-/**
- * @param {string} source Path of the application, e.g. index.html (or http://localhost:post for iOS)
- * @param {Object} options Options for the CSP rules
- * @param {string[]} options.connectSrc Entries to be added to the CSP rule for "connect-src"
- * @param {string[]} options.frameSrc Entries to be added to the CSP rule for "frame-src"
- */
-module.exports = ({source = DEFAULT_SOURCE, connectSrc, frameSrc} = options) => {
-	const htmlFilter = filter('**/*.html', {restore: true});
-
-	return lazypipe()
-		.pipe(() => htmlFilter)
-		.pipe(() => replace('<!-- inject:cordova-script -->', '<script src="cordova.js" async></script>'))
-		.pipe(() => replace('<!-- inject:cordova-csp -->', createMetaCsp(source, connectSrc, frameSrc)))
-		.pipe(() => size({title: 'inject-cordova-index'}))
-		.pipe(() => htmlFilter.restore);
 }

@@ -10,7 +10,15 @@ const size = require('gulp-size');
 
 const DEFAULT_SOURCE = 'index.html';
 
-module.exports = ({ appId, versionNumber, source = DEFAULT_SOURCE} = options) => {
+/**
+ * Replaces placeholder in the Cordova's config.xml
+ * 
+ * @param {Object} options Configuration for the replacement
+ * @param {string} options.appId ID under which the app is registered in the app store, e.g. com.company.app
+ * @param {string[]} options.versionNumber Version number of the release
+ * @param {string} options.source Path of the application, e.g. index.html (or http://localhost:post for iOS)
+ */
+module.exports = function injectConfig({ appId, versionNumber, source = DEFAULT_SOURCE} = options) {
 	// Split version into major/minor/patch, and calculate a version code for android versioning
 	const versionTokens = versionNumber.split('.');
 	const androidVersionCode = versionTokens[0]*100000 + versionTokens[1]*1000 + versionTokens[2]*10

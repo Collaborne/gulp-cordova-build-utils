@@ -29,8 +29,7 @@
     "gulp-replace": "^0.6.1",
     "gulp-size": "^2.1.0",
     "lazypipe": "^1.0.1",
-    "path": "^0.12.7",
-    "yargs": "^8.0.2"
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "mocha": "^3.2.0",

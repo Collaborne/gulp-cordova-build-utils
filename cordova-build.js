@@ -10,25 +10,18 @@ const path = require('path');
 const replace = require('gulp-replace');
 const size = require('gulp-size');
 
-const argv = require('yargs')
-	.boolean('release')
-	.string('storePassword')
-	.string('keyPassword')
-	.help()
-	.argv;
-
 function createCordovaBuild(builder, buildConfig) {
 	console.log(JSON.stringify(buildConfig));
 
 	// Unfortunately the names in build.json don't match the arguments needed for cordova build
 	const options = {
-		release: argv.release,
+		release: buildConfig.release,
 
 		// Android-specific options
 		storeFile: buildConfig.keystore ? path.join(process.cwd(), buildConfig.keystore) : undefined,
 		keyAlias: buildConfig.alias,
-		storePassword: buildConfig.storePassword || argv.storePassword,
-		keyPassword: buildConfig.password || argv.keyPassword,
+		storePassword: buildConfig.storePassword,
+		keyPassword: buildConfig.password,
 
 		// iOS-specific options
 		codeSignIdentity: buildConfig.codeSignIdentity,

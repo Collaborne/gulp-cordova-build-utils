@@ -15,30 +15,27 @@ const size = require('gulp-size');
  * Triggers the Cordova build
  * 
  * @param {string} osType Name of the OS for which to build
- * @param {Object} options Options for the Cordova build. This will overwrite the setting from build.json.
- * @param {boolean} options.release True if this a release for the app store
- * @param {string} options.storePassword Password for the app store (Android only)
- * @param {string} options.keyPassword Password for the Android key
+ * @param {Object} args Command line argument for tests
  * @returns 
  */
-module.exports = function buildCordova(osType, options) {
+exports.build = function buildCordova(osType, args) {
 	// Get basic configuration from build.json
 	const buildConfig = JSON.parse(fs.readFileSync('build.json', 'utf-8'));
 
 	console.log(JSON.stringify(buildConfig));
 
-	const buildConfigName = options.release ? 'release' : 'development';
+	const buildConfigName = args.release ? 'release' : 'development';
 	const osConfig = buildConfig[osType][buildConfigName];
 
 	// Unfortunately the names in build.json don't match the arguments needed for cordova build
 	const buildOptions = {
-		release: options.release,
+		release: args.release,
 
 		// Android-specific options
 		storeFile: buildConfig.keystore ? path.join(process.cwd(), buildConfig.keystore) : undefined,
 		keyAlias: buildConfig.alias,
-		storePassword: options.storePassword || buildConfig.storePassword,
-		keyPassword: options.keyPassword || buildConfig.password,
+		storePassword: args.storePassword || buildConfig.storePassword,
+		keyPassword: args.keyPassword || buildConfig.password,
 
 		// iOS-specific options
 		codeSignIdentity: buildConfig.codeSignIdentity,
@@ -52,6 +49,33 @@ module.exports = function buildCordova(osType, options) {
 	const builder = getBuilder(osType);
 	return lazypipe().pipe(() => builder(buildOptions));
 }
+
+/**
+ * Adds command line arguments for build process
+ * 
+ * @param {Object} yargs Yargs instance
+ */
+exports.addYargs = function addYargs(yargs) {
+	return yargs.option('app-endpoint', {
+		describe: 'Endpoint of the backend',
+		type: 'string',
+		default: process.env.COLLABORNE_ENDPOINT || 'https://signals.collaborne.com'
+	})
+	.option('release', {
+		describe: 'True if the release is for the app store',
+		type: 'boolean',
+		default: false,
+	})
+	.option('storePassword', {
+		describe: 'Password for the app store (Android only)',
+		type: 'string',
+	})
+	.option('keyPassword', {
+		describe: 'Password for the signing key (Android only)',
+		type: 'string',
+	})
+}
+
 
 /**
  * Returns the builder for the selected OS
@@ -69,4 +93,3 @@ function getBuilder(osType) {
 			throw new Error(`No builder available for OS ${osType}`);
 	}
 }
-

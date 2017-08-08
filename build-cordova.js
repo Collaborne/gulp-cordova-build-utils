@@ -22,26 +22,26 @@ exports.build = function buildCordova(osType, args) {
 	// Get basic configuration from build.json
 	const buildConfig = JSON.parse(fs.readFileSync('build.json', 'utf-8'));
 
-	console.log(JSON.stringify(buildConfig));
-
 	const buildConfigName = args.release ? 'release' : 'development';
 	const osConfig = buildConfig[osType][buildConfigName];
+
+	console.log(`Config for os=${osType} and config=${buildConfigName}: ${JSON.stringify(osConfig)}`);
 
 	// Unfortunately the names in build.json don't match the arguments needed for cordova build
 	const buildOptions = {
 		release: args.release,
 
 		// Android-specific options
-		storeFile: buildConfig.keystore ? path.join(process.cwd(), buildConfig.keystore) : undefined,
-		keyAlias: buildConfig.alias,
-		storePassword: args.storePassword || buildConfig.storePassword,
-		keyPassword: args.keyPassword || buildConfig.password,
+		storeFile: osConfig.keystore ? path.join(process.cwd(), osConfig.keystore) : undefined,
+		keyAlias: osConfig.alias,
+		storePassword: args.storePassword || osConfig.storePassword,
+		keyPassword: args.keyPassword || osConfig.password,
 
 		// iOS-specific options
-		codeSignIdentity: buildConfig.codeSignIdentity,
-		provisioningProfile: buildConfig.provisioningProfile,
-		developmentTeam: buildConfig.developmentTeam,
-		packageType: buildConfig.packageType
+		codeSignIdentity: osConfig.codeSignIdentity,
+		provisioningProfile: osConfig.provisioningProfile,
+		developmentTeam: osConfig.developmentTeam,
+		packageType: osConfig.packageType
 	};
 
 	console.log(JSON.stringify(buildOptions));

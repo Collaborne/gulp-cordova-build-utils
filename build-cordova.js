@@ -23,7 +23,7 @@ exports.build = function buildCordova(osType, args) {
 	const buildConfig = JSON.parse(fs.readFileSync('build.json', 'utf-8'));
 
 	const buildConfigName = args.release ? 'release' : 'development';
-	const osConfig = buildConfig[osType][buildConfigName];
+	const osConfig = buildConfig[osType][buildConfigName] || {};
 
 	console.log(`Config for os=${osType} and config=${buildConfigName}: ${JSON.stringify(osConfig)}`);
 

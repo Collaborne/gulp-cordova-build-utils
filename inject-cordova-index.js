@@ -15,16 +15,17 @@ const DEFAULT_SOURCE = 'index.html';
  * 
  * @param {Object} options Configuration for the replacement
  * @param {string[]} options.connectSrc Entries to be added to the CSP rule for "connect-src"
+ * @param {string[]} options.defaultSrc Entries to be added to the CSP rule for "default-src"
  * @param {string[]} options.frameSrc Entries to be added to the CSP rule for "frame-src"
  * @param {string} options.source Path of the application, e.g. index.html (or http://localhost:post for iOS)
  */
-module.exports = function injectIndex({ connectSrc, frameSrc, source = DEFAULT_SOURCE } = options) {
+module.exports = function injectIndex({ connectSrc, defaultSrc, frameSrc, source = DEFAULT_SOURCE } = options) {
 	const htmlFilter = filter('**/*.html', {restore: true});
 
 	return lazypipe()
 		.pipe(() => htmlFilter)
 		.pipe(() => replace('<!-- inject:cordova-script -->', '<script src="cordova.js" async></script>'))
-		.pipe(() => replace('<!-- inject:cordova-csp -->', createMetaCsp(source, connectSrc, frameSrc)))
+		.pipe(() => replace('<!-- inject:cordova-csp -->', createMetaCsp(source, connectSrc, defaultSrc, frameSrc)))
 		.pipe(() => size({title: 'inject-cordova-index'}))
 		.pipe(() => htmlFilter.restore);
 }
@@ -36,19 +37,27 @@ module.exports = function injectIndex({ connectSrc, frameSrc, source = DEFAULT_S
  * 
  * @return {string} Meta tag with CSP rules
  */
-function createMetaCsp(source, connectSrc = [], frameSrc = []) {
-	const cspConnectSrc = [ 'self:', ...connectSrc ];
-	if (source === DEFAULT_SOURCE) {
-		cspConnectSrc.push('file:');
-	} else {
-		cspConnectSrc.push(source);
-	}
+function createMetaCsp(source, connectSrc = [], defaultSrc = [], frameSrc = []) {
+	const cspConnectSrc = [
+		'self:',
+		source === DEFAULT_SOURCE ? 'file:' : source,
+		...connectSrc
+	];
 
 	// Allow playing embeded Youtube videos
-	const cspFrameSrc = [ 'https://www.youtube.com', ...frameSrc ];
+	const cspDefaultSrc = [
+		'https://www.google-analytics.com',
+		'https://www.youtube.com',
+		'https://s.ytimg.com',
+		...defaultSrc,
+	];
+	const cspFrameSrc = [
+		'https://www.youtube.com',
+		...frameSrc
+	];
 
 	const cspRules = {
-		'default-src': '\'self\' data: gap: https://ssl.gstatic.com \'unsafe-eval\' \'unsafe-inline\' https://www.google-analytics.com https://www.youtube.com https://s.ytimg.com',
+		'default-src': `'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline' ${cspDefaultSrc.join(' ')}`,
 		'media-src': 'data: *',
 		'img-src': 'data: blob: *',
 		'font-src': 'data: \'self\' https://fonts.gstatic.com',

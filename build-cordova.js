@@ -56,12 +56,7 @@ exports.build = function buildCordova(osType, args) {
  * @param {Object} yargs Yargs instance
  */
 exports.addYargs = function addYargs(yargs) {
-	return yargs.option('app-endpoint', {
-		describe: 'Endpoint of the backend',
-		type: 'string',
-		default: process.env.COLLABORNE_ENDPOINT || 'https://signals.collaborne.com'
-	})
-	.option('release', {
+	return yargs.option('release', {
 		describe: 'True if the release is for the app store',
 		type: 'boolean',
 		default: false,

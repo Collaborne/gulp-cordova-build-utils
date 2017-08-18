@@ -9,7 +9,7 @@ const path = require('path');
 const should = require('should');
 const File = require('vinyl');
 
-describe('gulp-inject-cordova-config', function() {
+describe('gulp-inject-cordova-index', function() {
 
 	let check;
 

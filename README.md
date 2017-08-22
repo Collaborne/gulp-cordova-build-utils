@@ -1,6 +1,4 @@
-# gulp-cordova-build-utils
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/Collaborne/gulp-cordova-build-utils.svg)](https://greenkeeper.io/)
+# gulp-cordova-build-utils [![Build Status](https://travis-ci.org/Collaborne/gulp-cordova-build-utils.svg?branch=master)](https://travis-ci.org/Collaborne/gulp-cordova-build-utils) [![Greenkeeper badge](https://badges.greenkeeper.io/Collaborne/gulp-cordova-build-utils.svg)](https://greenkeeper.io/)
 
 There’re lots of nitty-gritty details in correctly setting up a Cordova build process. This gulp plugin collects our best practices for building Cordova applications.
 

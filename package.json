@@ -1,6 +1,6 @@
 {
   "name": "gulp-cordova-build-utils",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "description": "Utils to simplify building Cordova applications with gulp",
   "main": "index.js",
   "scripts": {

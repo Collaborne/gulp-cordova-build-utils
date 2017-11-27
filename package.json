@@ -23,7 +23,7 @@
   "homepage": "https://github.com/Collaborne/gulp-cordova-build-utils#readme",
   "dependencies": {
     "gulp": "^3.9.1",
-    "gulp-cordova-build-android": "^1.5.1",
+    "gulp-cordova-build-android": "Collaborne/gulp-cordova-build-android#collaborne",
     "gulp-cordova-build-ios": "Collaborne/gulp-cordova-build-ios#collaborne",
     "gulp-filter": "^5.0.1",
     "gulp-replace": "^0.6.1",

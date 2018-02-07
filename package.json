@@ -24,7 +24,7 @@
   "dependencies": {
     "gulp": "^3.9.1",
     "gulp-cordova-build-android": "^1.5.1",
-    "gulp-cordova-build-ios": "Collaborne/gulp-cordova-build-ios#collaborne",
+    "gulp-cordova-build-ios": "Collaborne/gulp-cordova-build-ios#^2.1.1",
     "gulp-filter": "^5.0.1",
     "gulp-replace": "^0.6.1",
     "gulp-size": "^2.1.0",

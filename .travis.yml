@@ -7,6 +7,8 @@ cache:
   directories:
   - node_modules
 before_install:
+# Remove the './node_modules/.bin:' entry, see https://github.com/travis-ci/travis-ci/issues/8813
+- export PATH=`echo ${PATH} | sed -re 's,(^|:)(./)?node_modules/.bin($|:),\1,'`
 - if [ -d node_modules ] && [ x$(cat node_modules/.last-node-version 2>/dev/null) != x$(node -e 'console.log(process.version)') ]; then npm rebuild --update-binary && node -e 'console.log(process.version)' > node_modules/.last-node-version; fi
 deploy:
   provider: npm

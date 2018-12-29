@@ -24,8 +24,8 @@ module.exports = function injectIndex({ connectSrc, defaultSrc, frameSrc, source
 
 	return lazypipe()
 		.pipe(() => htmlFilter)
-		.pipe(() => replace('<!-- inject:cordova-script -->', '<script src="cordova.js" async></script>'))
-		.pipe(() => replace('<!-- inject:cordova-csp -->', createMetaCsp(source, connectSrc, defaultSrc, frameSrc)))
+		.pipe(() => replace(/<!--[!#]? inject:cordova-script -->/, '<script src="cordova.js" async></script>'))
+		.pipe(() => replace(/<!--[!#]? inject:cordova-csp -->/, createMetaCsp(source, connectSrc, defaultSrc, frameSrc)))
 		.pipe(() => size({title: 'inject-cordova-index'}))
 		.pipe(() => htmlFilter.restore);
 }

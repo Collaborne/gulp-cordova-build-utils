@@ -17,7 +17,7 @@ const DEFAULT_SOURCE = 'index.html';
  * @param {string[]} options.connectSrc Entries to be added to the CSP rule for "connect-src"
  * @param {string[]} options.defaultSrc Entries to be added to the CSP rule for "default-src"
  * @param {string[]} options.frameSrc Entries to be added to the CSP rule for "frame-src"
- * @param {string} options.source Path of the application, e.g. index.html (or http://localhost:post for iOS)
+ * @param {string} [options.source] Path of the application, default is 'index.html'
  */
 module.exports = function injectIndex({ connectSrc, defaultSrc, frameSrc, source = DEFAULT_SOURCE } = options) {
 	const htmlFilter = filter('**/*.html', {restore: true});

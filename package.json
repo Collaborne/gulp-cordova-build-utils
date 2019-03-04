@@ -21,8 +21,10 @@
     "url": "https://github.com/Collaborne/gulp-cordova-build-utils/issues"
   },
   "homepage": "https://github.com/Collaborne/gulp-cordova-build-utils#readme",
+  "peerDependencies": {
+    "gulp": "^4.0.0"
+  },
   "dependencies": {
-    "gulp": "^3.9.1",
     "gulp-cordova-build-android": "Collaborne/gulp-cordova-build-android#v2.1.0-collaborne.3",
     "gulp-cordova-build-ios": "Collaborne/gulp-cordova-build-ios#v3.0.0-collaborne.3",
     "gulp-filter": "^5.0.1",
@@ -32,6 +34,7 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "gulp": "^4.0.0",
     "mocha": "^4.0.0",
     "should": "^13.0.0"
   }
